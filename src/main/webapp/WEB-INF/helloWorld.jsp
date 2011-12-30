@@ -6,16 +6,16 @@
 </head>
 <body>
 
-<p>Hello World : 
+<p>Lastify.Fm : 
 
 <c:choose>
 <c:when test="${securityLevel eq 'Protected'}" >
-Protected Area.
+My music.
 </c:when>
 <c:when test="${securityLevel eq 'Public'}" >
 
-Public Area. 
-<p> <a href="/protected">Attempt to access</a> a protected resource</p>
+Home. 
+<p> <a href="/me">My music</a></p>
 </c:when>
 </c:choose>
 </p>
@@ -36,12 +36,45 @@ Public Area.
                     </authz:authorize>
        <authz:authorize access="hasRole('ROLE_USER_LASTFM')">
 						<p>You are connected with LastFm. </p>
+						<c:if test="${not empty lovedTracks}">
+						
+						<p>
+						Your LastFM Loved Tracks :
+						<select name="trackUrl">
+						<c:forEach var="track" items="${lovedTracks}">
+						<option value="<c:out value="${track.url}" />" /><c:out value="${track.name}" /></option>
+						</c:forEach>
+						</select>
+						</p>
+						</c:if>
+						<c:if test="${not empty topTracks}">
+					
+						<p>
+						Your LastFM Top Tracks :
+						<select name="trackUrl">
+						<c:forEach var="track" items="${topTracks}">
+						<option value="<c:out value="${track.url}" />" /><c:out value="${track.name}" /></option>
+						</c:forEach>
+						</select>
+						</p>
+						</c:if>
+						
                     </authz:authorize>
                            <authz:authorize access="hasRole('ROLE_USER_MIXCLOUD')">
 						<p>You are connected with Mixcloud. </p>
                     </authz:authorize>
                      <authz:authorize access="hasRole('ROLE_USER_SOUNDCLOUD')">
 						<p>You are connected with SoundCloud. </p>
+											<c:if test="${not empty soundCloudFavorites}">
+						<p>
+						Your SoundCloud Favorites :
+						<select name="trackUrl">
+						<c:forEach var="track" items="${soundCloudFavorites}">
+						<option value="<c:out value="${track.permalinkUrl}" />" /><c:out value="${track.title}" /></option>
+						</c:forEach>
+						</select>
+						</p>
+						</c:if>
                     </authz:authorize>
            
                     <authz:authorize access="hasRole('ROLE_USER') and !hasRole('ROLE_USER_FACEBOOK')">

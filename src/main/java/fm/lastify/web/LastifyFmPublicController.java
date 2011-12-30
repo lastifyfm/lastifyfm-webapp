@@ -15,15 +15,22 @@
  */
 package fm.lastify.web;
 
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.lastfm.api.LastFm;
+import org.springframework.social.lastfm.api.Track;
+import org.springframework.social.soundcloud.api.SoundCloud;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import fm.lastify.service.LastifyFmService;
+
 @Controller
-public class LastifyFmController {
+public class LastifyFmPublicController {
 
 	private String getAuthenticatedUserName() {
 		Authentication authentication = SecurityContextHolder.getContext()
@@ -32,25 +39,16 @@ public class LastifyFmController {
 	}
 
 	@RequestMapping("/")
-	public String helloProtectedWorld(Map model) {
+	public String home(Map model) {
 		model.put("userName", getAuthenticatedUserName());
 
 		// Display on the jsp which security level the page is intended for
 		model.put("securityLevel", "Public");
+		
 
 		return "helloWorld";
 	}
 
-	@RequestMapping("/protected")
-	public String helloWorld(Map model) {
-		model.put("userName", getAuthenticatedUserName());
 
-		// Display on the jsp which security level the page is intended for
-		model.put("securityLevel", "Protected");
-
-		return "helloWorld";
-	}
-	
-	
 
 }
