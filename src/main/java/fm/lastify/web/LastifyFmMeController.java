@@ -18,6 +18,8 @@ package fm.lastify.web;
 import java.util.List;
 import java.util.Map;
 
+import org.socialsignin.provider.lastfm.LastFmProviderService;
+import org.socialsignin.provider.soundcloud.SoundCloudProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,8 +36,10 @@ import fm.lastify.service.LastifyFmService;
 public class LastifyFmMeController {
 
 	@Autowired
-	private LastifyFmService lastifyFmService;
+	private LastFmProviderService lastFmProviderService;
 	
+	@Autowired
+	private SoundCloudProviderService soundCloudProviderService;
 	
 	private String getAuthenticatedUserName() {
 		Authentication authentication = SecurityContextHolder.getContext()
@@ -51,8 +55,8 @@ public class LastifyFmMeController {
 		model.put("securityLevel", "Protected");
 		
 		
-		LastFm lastFm = lastifyFmService.getAuthenticatedApi(LastFm.class);
-		SoundCloud soundCloud = lastifyFmService.getAuthenticatedApi(SoundCloud.class);
+		LastFm lastFm = lastFmProviderService.getAuthenticatedApi();
+		SoundCloud soundCloud = soundCloudProviderService.getAuthenticatedApi();
 
 		if (lastFm != null)
 		{
