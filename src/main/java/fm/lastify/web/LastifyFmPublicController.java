@@ -27,8 +27,6 @@ import org.springframework.social.soundcloud.api.SoundCloud;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import fm.lastify.service.LastifyFmService;
-
 @Controller
 public class LastifyFmPublicController {
 
